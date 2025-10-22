@@ -4,8 +4,8 @@ class LocalVideoModel {
   LocalVideoModel({
     required this.name,
     required this.videoUrl,
-    required this.likes,
-    required this.views,
+    this.likes = 0,
+    this.views = 0,
   });
 
   final String name;
@@ -13,12 +13,12 @@ class LocalVideoModel {
   final int likes;
   final int views;
 
-  factory LocalVideoModel.fromJsonMap(Map<String, dynamic> json) =>
+  factory LocalVideoModel.fromJson(Map<String, dynamic> json) =>
       LocalVideoModel(
-        name: json['name'],
+        name: json['name'] ?? 'No name',
         videoUrl: json['videoUrl'],
-        likes: json['likes'],
-        views: json['views'],
+        likes: json['likes'] ?? 0,
+        views: json['views'] ?? 0,
       );
 
   Map<String, dynamic> toJson() => {
@@ -28,5 +28,6 @@ class LocalVideoModel {
     "views": views,
   };
 
-  VideoPost toVideoPostEntity() => VideoPost(caption: name, videoUrl: videoUrl);
+  VideoPost toVideoPostEntity() =>
+      VideoPost(caption: name, videoUrl: videoUrl, likes: likes, views: views);
 }
